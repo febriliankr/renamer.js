@@ -10,6 +10,8 @@ var path = require('path');
 var ANSI_GREEN = '\x1b[32m';
 var ANSI_DEFAULT = '\x1b[0m';
 var ANSI_RED = '\x1b[35m';
+const originFileExtension = "js"
+const newFileExtension = "tsx"
 
 var walkSync = function(dir, filelist) {
   var files = fs.readdirSync(dir);
@@ -19,7 +21,7 @@ var walkSync = function(dir, filelist) {
       filelist = walkSync(path.join(dir, file), filelist);
     }
     else {
-      if(getFileExtension(file) === 'js' || getFileExtension(file) === 'ts'){
+      if(getFileExtension(file) === originFileExtension || getFileExtension(file) === newFileExtension){
         var renamed = file.slice(0, -3) + '.ts';
         fs.rename(path.join(dir, file), path.join(dir, renamed), function(err){
           err ? console.log(err) : null;
